@@ -1,18 +1,20 @@
 import os
 
-
+#파일 불러오기
 def get_file_list(dir_name):
     return os.listdir(dir_name)
 
+
+#파일별로 내용읽기
 def get_conetents(file_list):
     y_class = []
     X_text = []
     class_dict = {
         1: "0", 2: "0", 3:"0", 4:"0", 5:"1", 6:"1", 7:"1", 8:"1"}
-
+ # 0: 야구, 1: 축구
     for file_name in file_list:
         try:
-            f = open(file_name, "r",  encoding="cp949")
+            f = open(file_name, "r",  encoding="cp949") #cp949 윈도우 커널에 유니코드가 적용
             category = int(file_name.split(os.sep)[1].split("_")[0])
             y_class.append(class_dict[category])
             X_text.append(f.read())
@@ -23,13 +25,14 @@ def get_conetents(file_list):
     return X_text, y_class
 
 
-
-def get_cleaned_text(text):
+# Corpus 만들기 + 단어별 index 생성하기
+def get_cleaned_text(text): #의미없는 문장보호 등은 제거하기
     import re
     text = re.sub('\W+','', text.lower() )
     return text
 
 
+# from two dimesional array to one dimesional array
 def get_corpus_dict(text):
     text = [sentence.split() for sentence in text]
     clenad_words = [get_cleaned_text(word) for words in text for word in words]
@@ -83,11 +86,13 @@ def get_accuracy(similarity_list, y_class, source_news):
 
     return sum([source_class == y_class[i[0]] for i in similarity_list]) / len(similarity_list)
 
-
+os.chdir("C:\\Users\\finem\\OneDrive\\바탕 화면\\공부\\PythonforMachineLearning\\news\\news")
+os.getcwd()
+#파일 불러오기
 if __name__ == "__main__":
-    dir_name = "news_data"
+    dir_name = "news_data" #현재 폴
     file_list = get_file_list(dir_name)
-    file_list = [os.path.join(dir_name, file_name) for file_name in file_list]
+    file_list = [os.path.join(dir_name, file_name) for file_name in file_list] #join하기
 
     X_text, y_class = get_conetents(file_list)
 
