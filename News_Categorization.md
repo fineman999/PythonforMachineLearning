@@ -29,4 +29,13 @@
    - 두 점 사이의 각도
    - Why cosine similarity? Count > Direction
    - (Love, hate) -> (5, 0), (5 ,4), (4, 0) 어느점이 가장 가까운가?
-   
+
+Process
+---
+- 파일을 불러오기
+- 파일을 읽어서 단어사전 (corpus) 만들기
+- 단어별로 Index 만들기
+- 만들어진 인덱스로 문서별로 Bag of words vector 생성
+- 비교하고자 하는 문서 비교하기
+- 얼마나 맞는지 측정하기
+
